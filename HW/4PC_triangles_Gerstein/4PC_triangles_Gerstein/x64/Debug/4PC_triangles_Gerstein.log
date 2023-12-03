@@ -1,0 +1,10 @@
+﻿  4PC_triangles_Gerstein.cpp
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(25,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(26,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(27,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(28,97): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(62,15): warning C4473: 'scanf' : not enough arguments passed for format string
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(62,15): message : placeholders and their parameters expect 7 variadic arguments, but 6 were provided
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(62,15): message : the missing variadic argument 7 is required by format string '%f'
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\4PC_triangles_Gerstein\4PC_triangles_Gerstein.cpp(57,11): warning C4101: 'file': unreferenced local variable
+  4PC_triangles_Gerstein.vcxproj -> C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\4PC_triangles_Gerstein\x64\Debug\4PC_triangles_Gerstein.exe

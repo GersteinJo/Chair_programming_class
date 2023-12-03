@@ -1,0 +1,4 @@
+﻿  Main.cpp
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\3PC_random_Gerstein\3PC_random_Gerstein\Main.cpp(118,6): warning C4101: 'num_read': unreferenced local variable
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\3PC_random_Gerstein\3PC_random_Gerstein\Main.cpp(116,8): warning C4101: 'file': unreferenced local variable
+  3PC_random_Gerstein.vcxproj -> C:\Users\Яна\OneDrive\Documents\Uni\Семестр 7\BAZA\Прога\С\HW\3PC_random_Gerstein\x64\Debug\3PC_random_Gerstein.exe
