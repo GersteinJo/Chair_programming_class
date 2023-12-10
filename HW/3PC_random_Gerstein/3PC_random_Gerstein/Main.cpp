@@ -13,11 +13,12 @@ double* uniform_dist_array(int n, double arr_min = 0., double arr_max = 1.)
 	OUT: reference to the new array
 	*/
 {
+	srand(time(NULL));
 	double* new_array = new double[n];
 	for (int i = 0; i < n; i++)
 	{
 		new_array[i] = (double)rand() / RAND_MAX * (arr_max-arr_min) + arr_min;
-	}
+	}	
 	return new_array;
 
 }
@@ -31,7 +32,7 @@ IN: n -- length of the array
 OUT: reference to the new array
 */
 {
-	
+
 	//generate array uniformly distributed on segment [0,1]
 	int len_u = (n % 2 == 0) ? n : (n + 1);
 	double* u = uniform_dist_array(len_u);
@@ -93,10 +94,10 @@ int main()
 	double* my_new_array = uniform_dist_array(len_of_arr);
 	printf("Uniformly distributed array:\n");
 	//for (int i = 0; i < len_of_arr; i++)
-	//	printf("%Lf , ", my_new_array[i]);
+	//	printf("%lf , ", my_new_array[i]);
 
 	double* uniform_moments = moments(my_new_array, len_of_arr, 4);
-	printf("\n________________\n MEAN: %Lf \n STD: %Lf \n SKEWNESS: %Lf \n KURTOSIS: %Lf\n\n",
+	printf("\n________________\n MEAN: %lf \n STD: %lf \n SKEWNESS: %lf \n KURTOSIS: %lf\n\n",
 		mean(my_new_array, len_of_arr), sqrt(uniform_moments[2]), uniform_moments[3] / pow(uniform_moments[2], 1.5),
 		uniform_moments[4] / pow(uniform_moments[2], 2.) - 3.);
 
@@ -104,28 +105,38 @@ int main()
 	double* my_normal_array = normal_dist_array(len_of_arr);
 	printf("normally distributed array:\n");
 	//for (int i = 0; i < len_of_arr; i++)
-	//	printf("%Lf , ", my_normal_array[i]);
+	//	printf("%lf , ", my_normal_array[i]);
 
 	double* normal_moments = moments(my_normal_array, len_of_arr, 4);
-	printf("\n________________\n MEAN: %Lf \n STD: %Lf \n SKEWNESS: %Lf \n KURTOSIS: %Lf\n\n",
+	printf("\n________________\n MEAN: %lf \n STD: %lf \n SKEWNESS: %lf \n KURTOSIS: %lf\n\n",
 		mean(my_normal_array, len_of_arr), sqrt(normal_moments[2]), normal_moments[3] / pow(normal_moments[2], 1.5),
 		normal_moments[4] / pow(normal_moments[2], 2.) - 3.);
 
 
 
-	FILE* file;
 	int len_landau = 100000;
 	int num_read;
 	double* landau = new double[len_landau];
 	
-	freopen("Landau.txt", "r", stdin);
+	FILE* file = fopen("Landau.txt", "r");
+	if (!file) {
+		printf("FILE NOT FOUND\n");
+		exit(1);
+	}
+
 	for (int i = 0; i < len_landau; i++)
 	{
-		scanf("%Lf", &landau[i]);
+		fscanf(file, "%lf", &landau[i]);
 	}
-	fclose(stdin);
+
+	/*freopen("Landau.txt", "r", stdin);
+	for (int i = 0; i < len_landau; i++)
+	{
+		scanf("%lf", &landau[i]);
+	}
+	fclose(stdin);*/
 	double* landau_moments = moments(landau, len_landau, 4);
-	printf("\n________________\n MEAN: %Lf \n STD: %Lf \n SKEWNESS: %Lf \n KURTOSIS: %Lf\n\n",
+	printf("\n________________\n MEAN: %lf \n STD: %lf \n SKEWNESS: %lf \n KURTOSIS: %lf\n\n",
 		mean(landau, len_landau), sqrt(landau_moments[2]), landau_moments[3] / pow(landau_moments[2], 1.5),
 		landau_moments[4] / pow(landau_moments[2], 2.) - 3.);
 
