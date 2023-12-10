@@ -9,22 +9,22 @@
 
 struct Triangle
 {
-    float x1, y1;
-    float x2, y2;
-    float x3, y3;
-    float s;
+    double x1, y1;
+    double x2, y2;
+    double x3, y3;
+    double s;
 };
 
 void print_triangle(Triangle t)
 {
-    printf("(%f, %f), (%f, %f), (%f, %f), s=%f\n", t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.s);
+    printf("(%lf, %lf), (%lf, %lf), (%lf, %lf), s=%lf\n", t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.s);
 }
 
-float square(Triangle t)
+double square(Triangle t)
 {
-    float d12 = sqrt((t.x1 - t.x2) * (t.x1 - t.x2) + (t.y1 - t.y2) * (t.y1 - t.y2));
-    float d23 = sqrt((t.x3 - t.x2) * (t.x3 - t.x2) + (t.y3 - t.y2) * (t.y3 - t.y2));
-    float d31 = sqrt((t.x1 - t.x3) * (t.x1 - t.x3) + (t.y1 - t.y3) * (t.y1 - t.y3));
+    double d12 = sqrt((t.x1 - t.x2) * (t.x1 - t.x2) + (t.y1 - t.y2) * (t.y1 - t.y2));
+    double d23 = sqrt((t.x3 - t.x2) * (t.x3 - t.x2) + (t.y3 - t.y2) * (t.y3 - t.y2));
+    double d31 = sqrt((t.x1 - t.x3) * (t.x1 - t.x3) + (t.y1 - t.y3) * (t.y1 - t.y3));
     return sqrt((d12 + d23 + d31) * (-d12 + d23 + d31) * (d12 - d23 + d31) * (d12 + d23 - d31)) / 4.;
 }
 
@@ -34,8 +34,8 @@ bool contains_zero(Triangle t)
     t12 = { t.x1,t.y1,t.x2,t.y2,0.,0. };
     t23 = { t.x3,t.y3,t.x2,t.y2,0.,0. };
     t31 = { t.x1,t.y1,t.x3,t.y3,0.,0. };
-    //printf("%f, %f, %f, %f\n", square(t), square(t12), square(t23), square(t31));
-    return (square(t) == square(t12) + square(t23) + square(t31));
+    //printf("%lf, %lf, %lf, %lf\n", square(t), square(t12), square(t23), square(t31));
+    return fabs(square(t) -( square(t12) + square(t23) + square(t31)))<1e-15;
 }
 
 int comparator(const void* arg1, const void* arg2)
@@ -58,8 +58,8 @@ int main()
     freopen("triangles.txt", "r", stdin);
     for (int i = 0; i < len_file; i++)
     {
-        float x1, y1, x2, y2, x3, y3;
-        scanf("%f, %f, %f, %f, %f, %f, %f", &x1, &y1, &x2, &y2, &x3, &y3);
+        double x1, y1, x2, y2, x3, y3;
+        scanf("%lf, %lf, %lf, %lf, %lf, %lf", &x1, &y1, &x2, &y2, &x3, &y3);
         my_ts[i] = { x1, y1, x2, y2, x3, y3 };
         my_ts[i].s = square(my_ts[i]);
 
