@@ -54,8 +54,31 @@ int main()
     int num_containing_zero = 0;
 
 
-    FILE* file;
-    freopen("triangles.txt", "r", stdin);
+    FILE* file = fopen("triangles.txt", "r");
+    if (!file) {
+        printf("Can not open file triangles\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < len_file; i++)
+    {
+        float x1, y1, x2, y2, x3, y3;
+        if (fscanf(file, "%f, %f, %f, %f, %f, %f",
+            &x1, &y1, &x2, &y2, &x3, &y3)
+            != 6) {
+            printf("Error in line# %d", i + 1);
+            exit(1);
+        }
+        Triangle ttt = { x1, y1, x2, y2, x3, y3 };
+        my_ts[i] = ttt;
+        my_ts[i].s = square(my_ts[i]);
+
+        if (contains_zero(my_ts[i])) num_containing_zero++;
+
+    }
+
+
+    /*freopen("triangles.txt", "r", stdin);
     for (int i = 0; i < len_file; i++)
     {
         double x1, y1, x2, y2, x3, y3;
@@ -63,9 +86,13 @@ int main()
         my_ts[i] = { x1, y1, x2, y2, x3, y3 };
         my_ts[i].s = square(my_ts[i]);
 
-        if (contains_zero(my_ts[i])) num_containing_zero++;
+        if (contains_zero(my_ts[i]))
+        {
+            num_containing_zero++;
+            print_triangle(my_ts[i]);
+        }
     }
-    fclose(stdin);
+    fclose(stdin);*/
     
     qsort(my_ts, len_file, sizeof(Triangle), comparator);
     printf("smallest triangle:\n");
