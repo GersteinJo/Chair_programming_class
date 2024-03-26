@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{05732d0d-cb8b-4ca2-9856-5f7bbd9af3d5}</ProjectGuid>
+    <ProjectGuid>{36714383-8481-47b2-b28a-3fa4cb2d2db8}</ProjectGuid>
     <RootNamespace>My1PCpprationalclassGerstein</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
