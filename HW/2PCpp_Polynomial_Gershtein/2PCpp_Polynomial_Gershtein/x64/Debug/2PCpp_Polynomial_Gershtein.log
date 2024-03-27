@@ -1,0 +1,7 @@
+﻿  2PCpp_Polynomial_Gershtein.cpp
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein.cpp(56,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein.cpp(72,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein.cpp(102,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein.cpp(116,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein\2PCpp_Polynomial_Gershtein.cpp(168,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  2PCpp_Polynomial_Gershtein.vcxproj -> C:\Users\Яна\OneDrive\Documents\Uni\Семестр 8\базопрога\2PCpp_Polynomial_Gershtein\x64\Debug\2PCpp_Polynomial_Gershtein.exe
