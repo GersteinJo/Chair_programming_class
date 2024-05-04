@@ -12,16 +12,16 @@ class Polynomial
 public:
     Polynomial()
     {
-        coefficients = { 0 };
+        coefficients = { 0. };
     }
 
-    Polynomial(std::vector<double>& coefs)
-    {
-        coefficients.clear();
-        std::copy(coefs.begin(), coefs.end(), std::back_inserter(coefficients));
+    Polynomial(const std::vector<double>& coefs) : coefficients(coefs)
+    { 
+        if(coefficients.size() == 0) coefficients.push_back(0.0);
     }
+    
 
-    Polynomial& operator-();
+    Polynomial operator-() const;
 
     Polynomial operator-(const Polynomial& other);
     Polynomial operator+(const Polynomial& other);
@@ -42,10 +42,13 @@ private:
     std::vector<double> coefficients;
 };
 
-Polynomial& Polynomial::operator-()
+Polynomial Polynomial::operator-() const
 {
-    std::for_each(coefficients.begin(), coefficients.end(), [](double x) { return -x; });
-    return *this;
+    std::vector<double> new_coefs;
+    std::copy(coefficients.begin(), coefficients.end(), std::back_inserter(new_coefs));
+    std::for_each(new_coefs.begin(), new_coefs.end(), [](double& x) { x = -x; });
+    Polynomial res(new_coefs);
+    return res;
 }
 
 Polynomial Polynomial::operator-(const Polynomial& other)
@@ -82,8 +85,8 @@ Polynomial Polynomial::operator+(const Polynomial& other)
 
 Polynomial Polynomial::operator*(const Polynomial& other)
 {
-    std::vector<double> new_coefs;
-    for (int i = 0; i < coefficients.size() + other.coefficients.size()-1; i++) new_coefs.push_back(0.0);
+    size_t n = coefficients.size() + other.coefficients.size() - 1;
+    std::vector<double> new_coefs(n, 0.0);
     for (int i = 0; i < coefficients.size(); i++)
     {
         for (int j = 0; j < other.coefficients.size(); j++)
@@ -97,51 +100,29 @@ Polynomial Polynomial::operator*(const Polynomial& other)
 
 Polynomial& Polynomial::operator-=(const Polynomial& other)
 {
-    if (other.coefficients.size() > coefficients.size())
-    {
-        int tmp = other.coefficients.size() - coefficients.size();
-        for (int i = 0; i < tmp; i++) coefficients.push_back(0.0);
-    }
-    for (int i = 0; i < other.coefficients.size(); i++)
-    {
-        coefficients[i] -= other.coefficients[i];
-    }
+    *this = *this - other;
     return *this;
 }
 
 Polynomial& Polynomial::operator+=(const Polynomial& other)
 {
-    if (other.coefficients.size() > coefficients.size())
-    {
-        int tmp = other.coefficients.size() - coefficients.size();
-        for (int i = 0; i < tmp; i++) coefficients.push_back(0.0);
-    }
-    for (int i = 0; i < other.coefficients.size(); i++)
-    {
-        coefficients[i] += other.coefficients[i];
-    }
+    *this = *this + other;
     return *this;
 }
 
 Polynomial& Polynomial::operator*=(const Polynomial& other)
 {
-    std::vector<double> new_coefs;
-    for (int i = 0; i < coefficients.size() + other.coefficients.size(); i++) new_coefs.push_back(0.0);
-
-    for (int i = 0; i < coefficients.size(); i++)
-    {
-        for (int j = 0; j < other.coefficients.size(); i++)
-        {
-            new_coefs[i + j] += coefficients[i] * other.coefficients[j];
-        }
-    }
-    coefficients.clear();
-    std::copy(new_coefs.begin(), new_coefs.end(), std::back_inserter(coefficients));
+    *this = *this * other;
     return *this;
 }
 
 Polynomial Polynomial::derivative() const
 {
+    if (coefficients.size() == 1)
+    {
+        Polynomial res;
+        return res;
+    }
     std::vector<double>vec(coefficients.size() - 1);
     for (int i = 1; i < coefficients.size(); i++)
     {
@@ -153,12 +134,7 @@ Polynomial Polynomial::derivative() const
 
 double Polynomial::derivative(double x) const
 {
-    std::vector<double>vec(coefficients.size() - 1);
-    for (int i = 1; i < coefficients.size(); i++)
-    {
-        vec[i - 1] = (double)i * coefficients[i];
-    }
-    Polynomial res(vec);
+    Polynomial res = derivative();
     return res(x);
 }
 
@@ -230,9 +206,17 @@ double d_sinx(double x)
 
 int main()
 {
+    Polynomial T({ 1,2,3 });
+    Polynomial dT = T.derivative();
+    for (size_t i = 1; i < 10; i++) {
+        std::cout << " dT(" << i << ")= " << dT << std::endl;
+        dT = dT.derivative();
+    }
     std::vector<double> vln = { 0., 1., -1. / 2., 1. / 3., -1. / 4., 1. / 5. };
     std::vector<double> vsn = { 1., 0., -1. / 6., 0., -1. / 120., 0., 1./5040.};
     Polynomial ln_pol(vln);
+    Polynomial other = -ln_pol;
+    std::cout << ln_pol << "\t" << other << "\n";
     Polynomial sn_pol(vsn);
     std::cout << ln_pol << " " << sn_pol << "\n";
     std::cout << ln_pol + sn_pol << "\n";
@@ -243,6 +227,8 @@ int main()
     std::cout << sn_pol.derivative() << "=" << sn_pol.derivative(x) << " || " << d_sinx(x) << "\n";
     std::cout << ln_pol(x) << " " << ln(x) << " || " << sn_pol(x) << " " << sinx(x) << "\n";
     std::cout << (ln_pol * sn_pol)(x) << " " << ln(x) * sinx(x) << "\n";
+    std::cout << (ln_pol + sn_pol)(x) << " " << ln(x) + sinx(x) << "\n";
+    std::cout << (ln_pol - sn_pol)(x) << " " << ln(x) - sinx(x) << "\n";
 
 }
 
