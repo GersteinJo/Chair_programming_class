@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 int euclidean_algorithm(int a, int b)
 {
@@ -35,8 +36,8 @@ private:
 
 
 public:
-    Rational() = default;
-    Rational(int m)
+    
+    Rational(int m = 0)
     {
         this->_n = 1;
         this->_m = m;
@@ -44,8 +45,9 @@ public:
     Rational(int m, unsigned n)
     {
         this->_m = m;
-        this->_n = n;
-        this->Standardize();
+        if (n == 0) throw std::overflow_error("DEVISION BY ZERO!");
+        else this->_n = n;
+        this->Standardize(); // usage of try catch in this line would also work
     }
 
     Rational(double d, double eps = 1e-8)
@@ -67,10 +69,10 @@ public:
         return out << r._m << "/" << r._n;
     }
 
-    Rational& operator++(int)
+    Rational operator++(int)
     {
         Rational res = *this;
-        _m += _n;
+        this->_m += _n;
         return res;
     }
 
@@ -92,95 +94,89 @@ public:
         return *this;
     }
 
-    Rational& operator-()
+    Rational operator-() const
     {
-        _m = -_m;
-        return *this;
+        Rational res(-_m, _n);
+        return res;
     }
 
-    Rational operator-(Rational& other)
+    Rational operator-(const Rational& other) const
     {
         Rational new_r(_m * other._n - other._m * _n, _n * other._n);
         return new_r;
     }
 
-    Rational operator+(Rational& other)
+    Rational operator+(const Rational& other) const
     {
         Rational new_r(_m * other._n + other._m * _n, _n * other._n);
         return new_r;
     }
 
-    Rational operator*(Rational& other)
+    Rational operator*(const Rational& other) const
     {
         Rational new_r(_m * other._m, _n * other._n);
         return new_r;
     }
 
-    Rational operator/(Rational& other)
+    Rational operator/(const Rational& other) const
     {
         Rational new_r(_m * other._n, _n * other._m);
         return new_r;
     }
 
-    Rational& operator-=(Rational& other)
+    Rational& operator-=(const Rational& other)
     {
-        _m = _m * other._n - other._m * _n;
-        _n = _n * other._n;
-        this->Standardize();
+        *this = *this - other;
         return *this;
     }
 
-    Rational& operator+=(Rational& other)
+    Rational& operator+=(const Rational& other)
     {
-        _m = _m * other._n + other._m * _n;
-        _n = _n * other._n;
-        this->Standardize();
+        *this = *this + other;
         return *this;
     }
 
-    Rational& operator*=(Rational& other)
+    Rational& operator*=(const Rational& other)
     {
-        _m *= other._m;
-        _n *= other._n;
-        this->Standardize();
+        *this = *this * other;
         return *this;
     }
 
-    Rational& operator/=(Rational& other)
+    Rational& operator/=(const Rational& other)
     {
-        _m *= other._n;
-        _n *= other._m;
-        this->Standardize();
+        *this = *this / other;
         return *this;
-    }
-
-    bool operator=(Rational other)
-    {
-        this->_m = other._m;
-        this->_n = other._n;
-        return true;
     }
 
     /* in visual studio also works declaration of operator Rational& operator + (Rational& other) and bool operator=(Rational& other), but other compilers
     complain that a reference to a soon be freed memory is given*/
 
-    bool operator==(Rational& other)
+    bool operator==(const Rational& other) const
     {
         return (_m == other._m) && (_n == other._n);
     }
 
-    Rational& pow(int n)
+    Rational pow(int n) const
     {
         Rational new_r(1);
         for (int i = 0; i < n; i++)
         {
             new_r *= *this;
         }
+        for (int i = 0; i > n; i--)
+        {
+            new_r /= *this;
+        }
         new_r.Standardize();
         return new_r;
     }
 
     double To_Double()
+    {
+        return (double)this->_m / (double)this->_n;
+    }
+
+    explicit operator double() const
     {
         return (double)this->_m / (double)this->_n;
     }
@@ -212,16 +208,16 @@ Rational Bernully(int n)
         }*/
     }
     Rational out = my_rs[0];
+    delete[] my_rs;
     return out;
 }
 
-Rational* Bernully_sequence(int depth)
+std::vector<Rational> Bernully_sequence(int depth)
 {
-    Rational* bs = new Rational[depth];
+    std::vector<Rational> bs;
     for (int n = 0; n < depth; n++)
     {
-        Rational tmp = Bernully(n + 1);;
-        bs[n] = tmp;
+        bs.push_back(Bernully(n + 1));
     }
     return bs;
 }
@@ -230,6 +226,9 @@ int main()
 {
     {
         Rational r1(15, 25);
+        std::cout << double(r1) << "\n";
+        Rational other = Rational(0.25);
+        std::cout << other << "\n";
         Rational r2(0.25);
         Rational r3 = r1 + r2;
         r1 *= r3;
@@ -256,18 +255,16 @@ int main()
     int bs_depth;
     std::cout << "Enter the expected depth of the sequence: ";
     std::cin >> bs_depth;
-    Rational* bs = Bernully_sequence(bs_depth + 1);
+    std::vector<Rational> bs = Bernully_sequence(bs_depth + 1);
     std::cout << "Bernully sequence of " << bs_depth << " elements:\n";
     for (int n = 0; n < bs_depth + 1; n++) std::cout << bs[n] << " ";
     std::cout << "\n B_2k sequence of " << bs_depth / 2 << " elements:\n";
-    Rational* bs_2k = new Rational[bs_depth / 2 + 1];
+    std::vector<Rational> bs_2k;
     for (int n = 0; n < bs_depth / 2 + 1; n++)
     {
-        bs_2k[n] = bs[2 * n];
+        bs_2k.push_back(bs[2 * n]);
         std::cout << bs_2k[n] << " ";
     }
     std::cout << "\n";
-
-
 }
 
